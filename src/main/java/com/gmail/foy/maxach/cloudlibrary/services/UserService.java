@@ -8,6 +8,8 @@ import com.gmail.foy.maxach.cloudlibrary.models.User;
 import com.gmail.foy.maxach.cloudlibrary.repositories.RoleRepository;
 import com.gmail.foy.maxach.cloudlibrary.repositories.UserRepository;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +21,8 @@ import java.util.List;
 
 @Slf4j
 @Service
+@NoArgsConstructor
+@Data
 @AllArgsConstructor
 public class UserService {
 

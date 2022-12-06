@@ -2,21 +2,15 @@ package com.gmail.foy.maxach.cloudlibrary.services;
 
 import com.gmail.foy.maxach.cloudlibrary.exceptions.PostAlreadyExistsException;
 import com.gmail.foy.maxach.cloudlibrary.exceptions.PostNotFoundException;
-import com.gmail.foy.maxach.cloudlibrary.exceptions.UserAlreadyExistsException;
-import com.gmail.foy.maxach.cloudlibrary.exceptions.UserNotFoundException;
 import com.gmail.foy.maxach.cloudlibrary.models.Post;
 import com.gmail.foy.maxach.cloudlibrary.models.Role;
 import com.gmail.foy.maxach.cloudlibrary.models.User;
 import com.gmail.foy.maxach.cloudlibrary.repositories.PostRepository;
-import com.gmail.foy.maxach.cloudlibrary.repositories.RoleRepository;
-import com.gmail.foy.maxach.cloudlibrary.repositories.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
