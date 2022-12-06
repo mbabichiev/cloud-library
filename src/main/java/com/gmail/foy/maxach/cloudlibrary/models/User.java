@@ -21,7 +21,7 @@ public class User {
 
     @Size(min = 6, max = 30)
     private String login;
-    @Size(min = 6, max = 30)
+    @Size(min = 6, max = 255)
     private String password;
     @Email
     private String email;

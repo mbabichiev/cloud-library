@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -26,8 +27,11 @@ import java.util.List;
 @AllArgsConstructor
 public class UserService {
 
+    @Autowired
     private UserRepository userRepository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
     private RoleRepository roleRepository;
     private final static String ERROR_USER_WITH_ID_DOES_NOT_FOUND = "User with id: %d doesn't found";
     private final static String ERROR_USER_WITH_LOGIN_ALREADY_EXISTS = "User with login '%s' already exists";
