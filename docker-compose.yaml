@@ -1,12 +1,30 @@
 version: '3.5'
 
 services:
+  main:
+    container_name: main
+    build:
+      context: .
+    volumes:
+      - .:/app
+    ports:
+      - 8080:8080
+    command: java -jar app.jar
+    depends_on:
+      - postgres
   postgres:
-    container_name: postgres_container
+    container_name: postgres
     image: postgres
     environment:
+      PG_DATA: /var/lib/postgresql/data
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
     ports:
-      - "5432:5432"
+      - 9912:9912
+    volumes:
+      - pgdata:/var/lib/postgresql/data
     restart: unless-stopped
+
+volumes:
+  pgdata:
