@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel(value = "Getting user")

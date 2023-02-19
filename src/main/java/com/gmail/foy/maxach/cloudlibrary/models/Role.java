@@ -1,8 +1,6 @@
 package com.gmail.foy.maxach.cloudlibrary.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import javax.persistence.*;
 

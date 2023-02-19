@@ -2,7 +2,6 @@ package com.gmail.foy.maxach.cloudlibrary.models;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiOperation;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Email;

@@ -1,5 +1,19 @@
-# cloud-library
+# Cloud Library
 The REST app with using Spring Boot, Spring Data (PostgreSQL), Spring Security, JWT, Flyway, Lombok 
+
+# Quick start
+
+```bash
+mvn install
+```
+```bash
+docker-compose build
+```
+```bash
+docker-compose up
+```
+
+`Swagger documentation is avaliable on: http://localhost:8080/swagger-ui.html`
 
 # Endpoints
 
