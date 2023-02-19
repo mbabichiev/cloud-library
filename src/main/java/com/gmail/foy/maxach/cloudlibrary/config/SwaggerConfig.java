@@ -22,7 +22,8 @@ public class SwaggerConfig {
     private ApiInfo getApiInfo() {
         return new ApiInfo(
                 "Cloud Library Documentation",
-                "In this documentation you can find endpoints, required params and etc.",
+                "In this documentation you can find endpoints, required params and etc. " +
+                    "Authorization is based on Bearer tokens",
                 "0.0.1",
                 "",
                 new Contact(
@@ -61,9 +62,9 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("com.gmail.foy.maxach.cloudlibrary"))
                 .paths(PathSelectors.any())
                 .build()
-                .apiInfo(getApiInfo())
-                .securityContexts(Arrays.asList(securityContext()))
-                .securitySchemes(Arrays.asList(getApiKey()));
+                .apiInfo(getApiInfo());
+                //.securityContexts(Arrays.asList(securityContext()))
+                //.securitySchemes(Arrays.asList(getApiKey()));
     }
 }
 

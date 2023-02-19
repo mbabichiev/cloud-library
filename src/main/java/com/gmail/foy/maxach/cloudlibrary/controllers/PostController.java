@@ -31,7 +31,10 @@ public class PostController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @ApiOperation(value = "Create post")
+    @ApiOperation(value = "Create post", notes = "You should be authorized")
+    @ApiResponses({
+            @ApiResponse(code = 400, message = "You already have a post with the title 'Title'")
+    })
     public PostDto createPost(@Valid @RequestBody CreatePostDto createPostDto) {
         Post post = new Post();
         post.setTitle(createPostDto.getTitle());
@@ -44,6 +47,9 @@ public class PostController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Get post by id")
+    @ApiResponses({
+            @ApiResponse(code = 400, message = "Post with id: 1 doesn't found")
+    })
     public PostDto getPostById(@PathVariable Long id) {
         return new PostDto(postService.getPostById(id));
     }
@@ -78,7 +84,10 @@ public class PostController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @ApiOperation(value = "Update post by id")
+    @ApiOperation(value = "Update post by id", notes = "You should be authorized")
+    @ApiResponses({
+            @ApiResponse(code = 400, message = "Post with id: 1 doesn't found")
+    })
     public void updatePostById(@PathVariable Long id, @Valid @RequestBody CreatePostDto createPostDto) {
         Long idFromHeaders = UserDetailsImp.getUserIdFromHeaders();
         String roleFromHeaders = UserDetailsImp.getUserRoleFromHeaders();
@@ -97,7 +106,10 @@ public class PostController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @ApiOperation(value = "Delete post by id")
+    @ApiOperation(value = "Delete post by id", notes = "You should be authorized")
+    @ApiResponses({
+            @ApiResponse(code = 400, message = "Post with id: 1 doesn't found")
+    })
     public void deletePostById(@PathVariable Long id) {
         Long idFromHeaders = UserDetailsImp.getUserIdFromHeaders();
         String roleFromHeaders = UserDetailsImp.getUserRoleFromHeaders();

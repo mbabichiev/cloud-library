@@ -8,10 +8,7 @@ import com.gmail.foy.maxach.cloudlibrary.models.User;
 import com.gmail.foy.maxach.cloudlibrary.services.PostService;
 import com.gmail.foy.maxach.cloudlibrary.services.UserService;
 import com.gmail.foy.maxach.cloudlibrary.utils.UserDetailsImp;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -36,7 +33,12 @@ public class UserController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    @ApiOperation(value = "Create user")
+    @ApiOperation(value = "Create user", notes = "You should be authorized")
+    @ApiResponses({
+            @ApiResponse(code = 400, message =
+                    "- User with login 'mbabichiev' already exists\n" +
+                    "- Email 'example@gmail.com' already in use")
+    })
     public UserDto createUser(@Valid @RequestBody User user) {
         return new UserDto(userService.createUser(user));
     }
@@ -45,6 +47,9 @@ public class UserController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Get user by id")
+    @ApiResponses({
+            @ApiResponse(code = 400, message = "User with id 1 not found")
+    })
     public UserDto getUserById(@PathVariable Long id) {
         return new UserDto(userService.getUserById(id));
     }
@@ -80,6 +85,9 @@ public class UserController {
             @ApiImplicitParam(name = "page", dataType = "int", paramType = "query", defaultValue = "0"),
             @ApiImplicitParam(name = "size", dataType = "int", paramType = "query", defaultValue = "10")
     })
+    @ApiResponses({
+            @ApiResponse(code = 400, message = "User with id 1 not found")
+    })
     public List<PostDto> getAllPostsByUserId(@PathVariable Long id,
             @RequestParam(name = "sort", defaultValue = "old") String sortedType,
             @PageableDefault(sort = "old") Pageable pageable) {
@@ -100,7 +108,12 @@ public class UserController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @ApiOperation(value = "Update user by id")
+    @ApiOperation(value = "Update user by id", notes = "You should be authorized")
+    @ApiResponses({
+            @ApiResponse(code = 400, message =
+                    "- User with login 'mbabichiev' already exists\n" +
+                    "- User with id 1 not found")
+    })
     public void updateUserById(@PathVariable Long id, @Valid @RequestBody User user) {
         Long idFromHeaders = UserDetailsImp.getUserIdFromHeaders();
         String roleFromHeaders = UserDetailsImp.getUserRoleFromHeaders();
@@ -114,7 +127,10 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @ApiOperation(value = "Delete user by id")
+    @ApiOperation(value = "Delete user by id", notes = "You should be authorized")
+    @ApiResponses({
+            @ApiResponse(code = 400, message = "User with id 1 not found")
+    })
     public void deleteUserById(@PathVariable Long id) {
         Long idFromHeaders = UserDetailsImp.getUserIdFromHeaders();
         String roleFromHeaders = UserDetailsImp.getUserRoleFromHeaders();
