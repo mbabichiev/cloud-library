@@ -34,6 +34,9 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
 
+                .antMatchers( "/swagger-ui.html").permitAll()
+                .antMatchers("/swagger-resources/**").permitAll()
+
                 // only unauthorized users can auth
                 .antMatchers(HttpMethod.POST, "/api/auth/*").anonymous()
 

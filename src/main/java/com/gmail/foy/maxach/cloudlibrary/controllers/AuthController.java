@@ -1,11 +1,15 @@
 package com.gmail.foy.maxach.cloudlibrary.controllers;
 
+import com.gmail.foy.maxach.cloudlibrary.dtos.AuthUserDto;
+import com.gmail.foy.maxach.cloudlibrary.dtos.LoginUserDto;
 import com.gmail.foy.maxach.cloudlibrary.dtos.UserDto;
 import com.gmail.foy.maxach.cloudlibrary.models.User;
 import com.gmail.foy.maxach.cloudlibrary.services.AuthService;
 import com.gmail.foy.maxach.cloudlibrary.services.TokenService;
 import com.gmail.foy.maxach.cloudlibrary.services.UserService;
 import com.gmail.foy.maxach.cloudlibrary.utils.UserDetailsImp;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +19,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/auth")
 @AllArgsConstructor
+@Api(tags = "Authorization")
 public class AuthController {
 
     private AuthService authService;
@@ -24,10 +29,11 @@ public class AuthController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto register(@Valid @RequestBody User user) {
+    @ApiOperation(value = "Register your profile")
+    public AuthUserDto register(@Valid @RequestBody User user) {
         User registeredUser = authService.register(user);
 
-        UserDto userDto = new UserDto(registeredUser);
+        AuthUserDto userDto = new AuthUserDto(registeredUser);
         userDto.setToken(tokenService.generateToken(user.getId()));
 
         return userDto;
@@ -36,10 +42,11 @@ public class AuthController {
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public UserDto login(@Valid @RequestBody User user) {
+    @ApiOperation(value = "Login")
+    public AuthUserDto login(@Valid @RequestBody LoginUserDto user) {
         User signedInUser = authService.login(user.getLogin(), user.getPassword());
 
-        UserDto userDto = new UserDto(signedInUser);
+        AuthUserDto userDto = new AuthUserDto(signedInUser);
         userDto.setToken(tokenService.generateToken(signedInUser.getId()));
 
         return userDto;
@@ -48,6 +55,7 @@ public class AuthController {
 
     @GetMapping("/profile")
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Get information about own profile")
     public UserDto getOwnProfile() {
         Long idFromHeaders = UserDetailsImp.getUserIdFromHeaders();
         return new UserDto(userService.getUserById(idFromHeaders));

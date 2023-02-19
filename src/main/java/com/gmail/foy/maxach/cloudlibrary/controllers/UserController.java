@@ -8,6 +8,10 @@ import com.gmail.foy.maxach.cloudlibrary.models.User;
 import com.gmail.foy.maxach.cloudlibrary.services.PostService;
 import com.gmail.foy.maxach.cloudlibrary.services.UserService;
 import com.gmail.foy.maxach.cloudlibrary.utils.UserDetailsImp;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -23,6 +27,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/users")
 @AllArgsConstructor
+@Api(tags = "Users")
 public class UserController {
 
     private UserService userService;
@@ -31,6 +36,7 @@ public class UserController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Create user")
     public UserDto createUser(@Valid @RequestBody User user) {
         return new UserDto(userService.createUser(user));
     }
@@ -38,6 +44,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Get user by id")
     public UserDto getUserById(@PathVariable Long id) {
         return new UserDto(userService.getUserById(id));
     }
@@ -45,6 +52,7 @@ public class UserController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Get users by sorting type and page size")
     public List<UserDto> getAllUsers(
             @RequestParam(name = "sort", defaultValue = "old") String sortedType,
             @PageableDefault(sort = "old") Pageable pageable) {
@@ -66,6 +74,12 @@ public class UserController {
 
     @GetMapping("/{id}/posts")
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Get user's posts by user id, sorting type and page size")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "sort", dataType = "string", paramType = "query", defaultValue = "old"),
+            @ApiImplicitParam(name = "page", dataType = "int", paramType = "query", defaultValue = "0"),
+            @ApiImplicitParam(name = "size", dataType = "int", paramType = "query", defaultValue = "10")
+    })
     public List<PostDto> getAllPostsByUserId(@PathVariable Long id,
             @RequestParam(name = "sort", defaultValue = "old") String sortedType,
             @PageableDefault(sort = "old") Pageable pageable) {
@@ -86,6 +100,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
+    @ApiOperation(value = "Update user by id")
     public void updateUserById(@PathVariable Long id, @Valid @RequestBody User user) {
         Long idFromHeaders = UserDetailsImp.getUserIdFromHeaders();
         String roleFromHeaders = UserDetailsImp.getUserRoleFromHeaders();
@@ -99,6 +114,7 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ApiOperation(value = "Delete user by id")
     public void deleteUserById(@PathVariable Long id) {
         Long idFromHeaders = UserDetailsImp.getUserIdFromHeaders();
         String roleFromHeaders = UserDetailsImp.getUserRoleFromHeaders();

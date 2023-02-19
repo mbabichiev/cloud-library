@@ -1,16 +1,16 @@
 package com.gmail.foy.maxach.cloudlibrary.dtos;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gmail.foy.maxach.cloudlibrary.models.User;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@ApiModel(value = "Getting user")
-public class UserDto {
+@ApiModel(value = "Auth User")
+public class AuthUserDto {
 
     @JsonProperty("Id")
     @ApiModelProperty(example = "1")
@@ -28,8 +28,12 @@ public class UserDto {
     @ApiModelProperty(example = "USER_ROLE")
     private String role;
 
+    @JsonProperty("Token")
+    @ApiModelProperty(example = "JWT token")
+    private String token;
 
-    public UserDto(User user) {
+
+    public AuthUserDto(User user) {
         id = user.getId();
         login = user.getLogin();
         email = user.getEmail();
